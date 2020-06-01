@@ -29,16 +29,4 @@ jobs:
     steps:
       - name: clone repository
         uses: actions/checkout@v2
-
-      - name: bot actions
-        uses: actions/github-script@v1
-        env:
-          PROVIDER: 'lamber-ken'
-          REPOSITORY: 'hconfig'
-          RERUN_CMD: 'rerun failure checks'
-        with:
-#          github-token: ${{secrets.BKBOT_TOKEN}}
-          script: |
-            const path = require('path')
-            const scriptPath = path.resolve('.github/actions/bot/src/action.js')
-            require(scriptPath)({core}, {context}, {github})
+        run: echo 123

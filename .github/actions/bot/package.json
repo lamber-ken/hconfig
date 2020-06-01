@@ -1,18 +1,13 @@
 {
-  "name": "github_action_ci_bot",
+  "name": "github-action-bot",
+  "description": "Bot for github actions",
   "version": "1.1.1",
-  "description": "CI Bot for GitHub Actions",
-  "main": "dist/index.js",
-  "scripts": {
-    "lint": "eslint 'src/**.js' 'tests/**.js' --fix",
-    "test": "eslint 'src/**.js' 'tests/**.js' && jest --coverage",
-    "build": "ncc build src/main.js"
-  },
-  "author": "lamber-ken",
+  "author": "GitHub",
   "license": "Apache LICENSE 2.0",
-  "homepage": "https://github.com/apache/hudi",
-  "bugs": {
-    "url": "https://github.com/apache/hudi/issues"
+  "main": "dist/index.js",
+  "private": true,
+  "scripts": {
+    "build": "ncc build src/action.js"
   },
   "dependencies": {
     "@actions/core": "^1.2.4",
