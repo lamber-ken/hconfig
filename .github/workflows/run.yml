@@ -17,10 +17,14 @@
 # under the License.
 #
 
-name: Bot tests
+name: run
+
 on:
-  issue_comment:
-    types: [created]
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - 'site/**'
 
 jobs:
   bot:
