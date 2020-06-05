@@ -33,7 +33,7 @@ jobs:
       - name: push site
 #        if: ${{ github.event.comment.body == 'sync testing site' }}
         run: |
-          git clone https://${{ secrets.HUDI_GITHUB_WEB_TOKEN }}@github.com/lamber-ken/hconfig/hudi-testing-site
+          git clone https://${{ secrets.HUDI_GITHUB_WEB_TOKEN }}@github.com/ApacheHudi/hudi-testing-site
           cd hudi-testing-site
           mkdir -p docs
           \cp -rf ../_site/* docs
