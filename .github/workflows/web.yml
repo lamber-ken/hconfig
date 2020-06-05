@@ -14,7 +14,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-#          token: ${{ secrets.HUDI_GITHUB_WEB_TOKEN }}
 
       - name: fetch pull request branch
         run: |
@@ -22,7 +21,6 @@ jobs:
           git checkout FETCH_HEAD
 
       - name: jekyll docker build
-#        if: ${{ github.event.comment.body == 'sync testing site' }}
         run: |
           docker run \
           --privileged=true \
@@ -32,7 +30,6 @@ jobs:
           /bin/bash -c "chmod 777 -R /srv/jekyll && cd /srv/jekyll/docs && gem sources -l && bundle install && bundle exec jekyll build --config _config.yml,_config.staging.yml"
 
       - name: push site
-#        if: ${{ github.event.comment.body == 'sync testing site' }}
         run: |
           git clone https://${{ secrets.HUDI_GITHUB_WEB_TOKEN }}@github.com/ApacheHudi/hudi-testing-site
           cd hudi-testing-site
