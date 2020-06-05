@@ -36,7 +36,7 @@ jobs:
           -v ${{ github.workspace }}/docs:/srv/jekyll/docs \
           -v ${{ github.workspace }}/_site:/srv/jekyll/docs/_site \
           jekyll/jekyll:3.8 \
-          /bin/bash -c "chmod 777 -R /srv/jekyll && cd /srv/jekyll/docs && gem sources -l && bundle install && bundle exec jekyll build --config _config.yml,_config.staging.yml"
+          /bin/bash -c "chmod 777 -R /srv/jekyll && cd /srv/jekyll/docs && gem sources -l && bundle install && bundle exec jekyll build --config _config.yml,_config.testing.yml"
 
       - name: push site
         run: |
