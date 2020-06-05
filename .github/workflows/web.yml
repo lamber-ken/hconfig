@@ -20,6 +20,8 @@ jobs:
           git fetch origin +refs/pull/${{ github.event.issue.number }}/merge
           git checkout FETCH_HEAD
 
+          git show-ref
+
           siteRef=`git show-ref --hash --verify refs/heads/asf-site`
           pullRef=`git log -1 --pretty=format:"%P" -1`
           if [[ $pullRef =~ $siteRef ]]
