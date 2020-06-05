@@ -17,6 +17,7 @@ jobs:
 
       - name: build docker container test
         run: |
+          echo 99999999
           echo ${{ github.event.pull_request.head.sha }}
           ls -al ${{ github.workspace }}
           echo 123
