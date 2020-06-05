@@ -1,0 +1,40 @@
+name: web sync
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: clone repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: fetch pull request branch
+        run: |
+          git fetch origin +refs/pull/${{ github.event.issue.number }}/merge
+          git checkout FETCH_HEAD
+
+      - name: build docker container
+        if: ${{ github.event.comment.body == 'sync testing site' }}
+        run: |
+          docker run \
+          --privileged=true \
+          -v ${{ github.workspace }}/docs:/srv/jekyll/docs \
+          -v ${{ github.workspace }}/_site:/srv/jekyll/docs/_site \
+          jekyll/jekyll:3.8 \
+          /bin/bash -c "chmod 777 -R /srv/jekyll && cd /srv/jekyll/docs && bundle install && bundle update --bundler $$ bundle exec jekyll serve --config _config.yml,_config.staging.yml"
+
+      - name: push site
+        if: ${{ github.event.comment.body == 'sync site' }}
+        env:
+          HUDI_GITHUB_WEB_TOKEN_2: ${{ github.event.comment.body }}
+          HUDI_GITHUB_WEB_TOKEN: ${{ secrets.HUDI_GITHUB_WEB_TOKEN }}
+        run: |
+          env
+          echo ${HUDI_GITHUB_WEB_TOKEN_2}
+          ls -al
