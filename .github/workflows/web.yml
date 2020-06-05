@@ -35,6 +35,7 @@ jobs:
           echo 456
           echo ${{ github.workspace }}
           echo 789
+          env
 #          docker run \
 #          --privileged=true \
 #          -v ${{ github.workspace }}/docs:/srv/jekyll/docs \
