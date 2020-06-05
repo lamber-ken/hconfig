@@ -13,28 +13,32 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+          token: ${{ secrets.HUDI_GITHUB_WEB_TOKEN }}
 
       - name: fetch pull request branch
         run: |
           git fetch origin +refs/pull/${{ github.event.issue.number }}/merge
           git checkout FETCH_HEAD
 
-      - name: build docker container
-        if: ${{ github.event.comment.body == 'sync testing site' }}
+      - name: jekyll docker build
+#        if: ${{ github.event.comment.body == 'sync testing site' }}
         run: |
           docker run \
           --privileged=true \
           -v ${{ github.workspace }}/docs:/srv/jekyll/docs \
           -v ${{ github.workspace }}/_site:/srv/jekyll/docs/_site \
           jekyll/jekyll:3.8 \
-          /bin/bash -c "chmod 777 -R /srv/jekyll && cd /srv/jekyll/docs && bundle install && bundle update --bundler $$ bundle exec jekyll serve --config _config.yml,_config.staging.yml"
+          /bin/bash -c "chmod 777 -R /srv/jekyll && cd /srv/jekyll/docs && gem sources -l && bundle install && bundle exec jekyll build --config _config.yml,_config.staging.yml"
 
       - name: push site
-        if: ${{ github.event.comment.body == 'sync site' }}
-        env:
-          HUDI_GITHUB_WEB_TOKEN_2: ${{ github.event.comment.body }}
-          HUDI_GITHUB_WEB_TOKEN: ${{ secrets.HUDI_GITHUB_WEB_TOKEN }}
+#        if: ${{ github.event.comment.body == 'sync testing site' }}
         run: |
-          env
-          echo ${HUDI_GITHUB_WEB_TOKEN_2}
-          ls -al
+          git clone git@github.com:ApacheHudi/hudi-testing-site.git
+          cd hudi-testing-site
+          mkdir -p docs
+          \cp -rf ../_site/* docs
+          git config user.name test
+          git config user.email test@apache.org
+          git add -A
+          git commit -am "push site"
+          git push origin master --force
