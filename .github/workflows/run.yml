@@ -1,12 +1,8 @@
 name: web sync
 
 on:
-  pull_request:
-    branches:
-      - master
-    paths-ignore:
-      - 'site/**'
-
+  issue_comment:
+    types: [created]
 
 jobs:
   bot:
