@@ -15,11 +15,12 @@ jobs:
 
       - name: build docker container test
         run: |
+          echo ls -al
+          echo 456
           echo $PWD
           echo 456
           echo ${{ github.workspace }}
           echo 789
-          env
           docker run \
           --privileged=true \
           -v ${{ github.workspace }}/docs:/srv/jekyll/docs \
@@ -36,8 +37,6 @@ jobs:
           -v ${{ github.workspace }}/_site:/srv/jekyll/docs/_site \
           jekyll/jekyll:3.8 \
           /bin/bash -c "chmod 777 -R /srv/jekyll && cd docs && bundle install && bundle update --bundler $$ bundle exec jekyll serve --config _config.yml,_config.staging.yml"
-
-
 
       - name: push site
         if : ${{ github.event.comment.body == 'sync site' }}
