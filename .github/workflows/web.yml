@@ -15,6 +15,11 @@ jobs:
 
       - name: build docker container test
         run: |
+          echo $PWD
+          echo 456
+          echo ${{ github.workspace }}
+          echo 789
+          env
           docker run \
           --privileged=true \
           -v ${{ github.workspace }}/docs:/srv/jekyll/docs \
@@ -25,9 +30,6 @@ jobs:
       - name: build docker container
         if : ${{ github.event.comment.body == 'sync testing site' }}
         run: |
-          echo $PWD
-          echo ${{ github.workspace }}
-          env
           docker run \
           --privileged=true \
           -v ${{ github.workspace }}/docs:/srv/jekyll/docs \
