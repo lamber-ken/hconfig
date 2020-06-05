@@ -13,8 +13,17 @@ jobs:
       - name: clone repository
         uses: actions/checkout@v2
 
+      - name: build docker container test
+        run: |
+          docker run \
+          --privileged=true \
+          -v ${{ github.workspace }}/docs:/srv/jekyll/docs \
+          -v ${{ github.workspace }}/_site:/srv/jekyll/docs/_site \
+          jekyll/jekyll:3.8 \
+          /bin/bash -c "chmod 777 -R /srv/jekyll && cd docs && ls -al"
+
       - name: build docker container
-        if : ${{ github.event.comment.body == 'sync site' }}
+        if : ${{ github.event.comment.body == 'sync testing site' }}
         run: |
           docker run \
           --privileged=true \
