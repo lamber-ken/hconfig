@@ -21,6 +21,7 @@ jobs:
           -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
           jekyll/jekyll:3.8 \
           /bin/bash -c "chmod 777 /srv/jekyll && ls -al"
+          ls -al
 
       - name: build docker container
         if : ${{ github.event.comment.body == 'sync site' }}
