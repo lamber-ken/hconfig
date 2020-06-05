@@ -1,0 +1,22 @@
+
+name: web sync
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: build site
+        run: |
+          env
+          echo ""
+          docker run \
+          -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
+          jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && jekyll build --future"
+
