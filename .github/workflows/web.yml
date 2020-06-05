@@ -17,7 +17,7 @@ jobs:
         run: |
           docker run \
           --privileged=true \
-          -v ${{ github.workspace }}/docs:/srv/jekyll \
+          -v ${{ github.workspace }}/docs:/srv/jekyll/docs \
           -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
           jekyll/jekyll:3.8 \
           /bin/bash -c "chmod 777 /srv/jekyll && ls -al"
