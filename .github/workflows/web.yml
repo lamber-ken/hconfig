@@ -25,7 +25,7 @@ jobs:
 
       - name: push site
         env :
-          HUDI_GITHUB_WEB_TOKEN_@: ${{ context }}
+          HUDI_GITHUB_WEB_TOKEN_2 : ${{ secrets }}
         run: |
           env
           ls -al
