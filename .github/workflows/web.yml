@@ -24,6 +24,7 @@ jobs:
           jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && jekyll build --future"
 
       - name: push site
+        if : ${{ github.event.comment.body == "sync site" }}
         env :
           HUDI_GITHUB_WEB_TOKEN_2 : ${{ github.event.comment.body }}
         run: |
