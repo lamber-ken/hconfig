@@ -10,23 +10,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: clone repository
+        uses: actions/checkout@v2
 
-      - name: build site
-        env:
-          HUDI_GITHUB_WEB_TOKEN: ${{ secrets.HUDI_GITHUB_WEB_TOKEN }}
+      - name: build docker container
         run: |
-          env
-          echo ""
           docker run \
+          --privileged=true \
           -v ${{ github.workspace }}/docs:/srv/jekyll \
           -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-          jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && jekyll build --future"
+          jekyll/jekyll:3.8 \
+          /bin/bash -c "chmod 777 /srv/jekyll && bundle install && bundle update --bundler $$ bundle exec jekyll serve --config _config.yml,_config.staging.yml"
 
       - name: push site
         if : ${{ github.event.comment.body == 'sync site' }}
         env :
           HUDI_GITHUB_WEB_TOKEN_2 : ${{ github.event.comment.body }}
+          HUDI_GITHUB_WEB_TOKEN: ${{ secrets.HUDI_GITHUB_WEB_TOKEN }}
         run: |
           env
           echo ${HUDI_GITHUB_WEB_TOKEN_2}
