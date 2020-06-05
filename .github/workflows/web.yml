@@ -15,9 +15,19 @@ jobs:
 
       - name: build docker container test
         run: |
+          ls -al ${{ github.workspace }}
+          echo 123
+          echo 123
+          echo 123
           echo ls -al
           echo 456
+          echo 456
+          echo 456
+          echo 456
           echo $PWD
+          echo 456
+          echo 456
+          echo 456
           echo 456
           echo ${{ github.workspace }}
           echo 789
