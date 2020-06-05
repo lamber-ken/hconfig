@@ -13,25 +13,15 @@ jobs:
       - name: clone repository
         uses: actions/checkout@v2
 
-      - name: build docker container test
-        run: |
-          docker run \
-          --privileged=true \
-          -v ${{ github.workspace }}/docs:/srv/jekyll/docs \
-          -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-          jekyll/jekyll:3.8 \
-          /bin/bash -c "chmod 777 /srv/jekyll && ls -al"
-          ls -al
-
       - name: build docker container
         if : ${{ github.event.comment.body == 'sync site' }}
         run: |
           docker run \
           --privileged=true \
-          -v ${{ github.workspace }}/docs:/srv/jekyll \
-          -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
+          -v ${{ github.workspace }}/docs:/srv/jekyll/docs \
+          -v ${{ github.workspace }}/_site:/srv/jekyll/docs/_site \
           jekyll/jekyll:3.8 \
-          /bin/bash -c "chmod 777 /srv/jekyll && bundle install && bundle update --bundler $$ bundle exec jekyll serve --config _config.yml,_config.staging.yml"
+          /bin/bash -c "chmod 777 -R /srv/jekyll && cd docs && bundle install && bundle update --bundler $$ bundle exec jekyll serve --config _config.yml,_config.staging.yml"
 
       - name: push site
         if : ${{ github.event.comment.body == 'sync site' }}
