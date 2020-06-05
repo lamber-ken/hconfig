@@ -27,5 +27,6 @@ jobs:
         env :
           HUDI_GITHUB_WEB_TOKEN_2 : ${{ github.event.comment.body }}
         run: |
+          env
           echo ${ HUDI_GITHUB_WEB_TOKEN_2 }
           ls -al
