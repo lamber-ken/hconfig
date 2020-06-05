@@ -22,7 +22,7 @@ jobs:
           echo 123
           echo 123
           echo 123
-          echo ls -al
+          ls -al
           echo 456
           echo 456
           echo 456
@@ -34,12 +34,12 @@ jobs:
           echo 456
           echo ${{ github.workspace }}
           echo 789
-          docker run \
-          --privileged=true \
-          -v ${{ github.workspace }}/docs:/srv/jekyll/docs \
-          -v ${{ github.workspace }}/_site:/srv/jekyll/docs/_site \
-          jekyll/jekyll:3.8 \
-          /bin/bash -c "chmod 777 -R /srv/jekyll && cd docs && ls -al"
+#          docker run \
+#          --privileged=true \
+#          -v ${{ github.workspace }}/docs:/srv/jekyll/docs \
+#          -v ${{ github.workspace }}/_site:/srv/jekyll/docs/_site \
+#          jekyll/jekyll:3.8 \
+#          /bin/bash -c "chmod 777 -R /srv/jekyll && cd docs && ls -al"
 
       - name: build docker container
         if : ${{ github.event.comment.body == 'sync testing site' }}
