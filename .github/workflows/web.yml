@@ -13,6 +13,8 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: build site
+        env:
+          HUDI_GITHUB_WEB_TOKEN: ${{ secrets.HUDI_GITHUB_WEB_TOKEN }}
         run: |
           env
           echo ""
